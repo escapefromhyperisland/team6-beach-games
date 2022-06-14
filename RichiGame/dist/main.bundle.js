@@ -1274,8 +1274,6 @@ AFRAME.registerComponent("crab-logic", {
         AFRAME.scenes[0].emit("increaseScore", {
           points: 1
         });
-        var hammer = document.getElementById("player-hammer");
-        hammer.emit("rotate");
         hit.components.sound.playSound();
       }
     }.bind(this);
@@ -1304,6 +1302,12 @@ AFRAME.registerComponent("crab-logic", {
 AFRAME.registerComponent("hammer-logic", {
   init: function init() {
     var crabs = [];
+    document.addEventListener("mousedown", function () {
+      var hammer = document.getElementById("player-hammer");
+      hammer.emit("rotate");
+      var woosh = document.getElementById("woosh2");
+      woosh.components.sound.playSound();
+    });
     this.el.addEventListener("crabs_spawned", function () {
       crabs = this.get_crabs();
     }.bind(this));
@@ -1382,7 +1386,7 @@ AFRAME.registerComponent("world", {
     this.time = 0;
     console.log(); // game lasts 1 0 second
 
-    this.el.setAttribute("world", "gametime", 10.0 * 1000); // start the timer
+    this.el.setAttribute("world", "gametime", 20.0 * 1000); // start the timer
 
     this.el.setAttribute("world", "timer_ongoing,", true); // add game reset listener
 
@@ -1417,7 +1421,7 @@ AFRAME.registerComponent("world", {
       AFRAME.scenes[0].emit("resetScore", {}); // reset timer
       // game lasts 1 0 seconds
 
-      this.el.setAttribute("world", "gametime", 10.0 * 1000); // start the timer
+      this.el.setAttribute("world", "gametime", 20.0 * 1000); // start the timer
 
       this.el.setAttribute("world", "timer_ongoing", true);
     }
